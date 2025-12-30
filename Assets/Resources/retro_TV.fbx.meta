@@ -1,9 +1,34 @@
 fileFormatVersion: 2
-guid: 4fa7624f347c96e428e28468b352f591
+guid: 7c02374c108374f48a848e7322288869
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 1
+    second: {fileID: 2100000, guid: fe2c288cfb5221848b0504cc1c933d69, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: retro tv_1_BaseColor
+    second: {fileID: 2800000, guid: 21bd4c703c8b8644b9cbc12534a32989, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: retro tv_1_Metallic
+    second: {fileID: 2800000, guid: e4cc63bbffd2dc5499f4d16ec9aaac47, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: retro tv_1_Normal
+    second: {fileID: 2800000, guid: c2716fce37a62424487b346195959b8f, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: retro tv_1_Roughness
+    second: {fileID: 2800000, guid: af083dcd026473040a756c0d426187e9, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
