@@ -1,21 +1,21 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using Cinemachine;
 
 public class VirtualCameraObjectController : MonoBehaviour
 {
-    [Header("±ØĞèÒıÓÃ")]
+    [Header("å¿…éœ€å¼•ç”¨")]
     public CinemachineVirtualCamera virtualCamera;
 
-    [Header("¿ØÖÆ²ÎÊı")]
-    public float followDistance = 3f;      // ÎïÌåÔÚÏà»úÇ°·½µÄ¾àÀë
-    public float ySensitivity = 0.5f;      // YÖáÒÆ¶¯ÁéÃô¶È
-    public float moveSmoothness = 8f;      // ÒÆ¶¯Æ½»¬¶È
+    [Header("æ§åˆ¶å‚æ•°")]
+    public float followDistance = 3f;      // ç‰©ä½“åœ¨ç›¸æœºå‰æ–¹çš„è·ç¦»
+    public float ySensitivity = 0.5f;      // Yè½´ç§»åŠ¨çµæ•åº¦
+    public float moveSmoothness = 8f;      // ç§»åŠ¨å¹³æ»‘åº¦
 
-    [Header("Ñ¡ÔñÉèÖÃ")]
+    [Header("é€‰æ‹©è®¾ç½®")]
     public LayerMask selectableLayers = -1;
     public float maxSelectionDistance = 50f;
 
-    // ÄÚ²¿×´Ì¬
+    // å†…éƒ¨çŠ¶æ€
     private GameObject selectedObject;
     private bool isDragging = false;
     private float currentYOffset = 0f;
@@ -23,36 +23,36 @@ public class VirtualCameraObjectController : MonoBehaviour
 
     void Start()
     {
-        // ×Ô¶¯²éÕÒĞéÄâÏà»ú
+        // è‡ªåŠ¨æŸ¥æ‰¾è™šæ‹Ÿç›¸æœº
         if (virtualCamera == null)
         {
             virtualCamera = FindObjectOfType<CinemachineVirtualCamera>();
             if (virtualCamera == null)
-                Debug.LogWarning("Î´ÕÒµ½CinemachineVirtualCamera£¬ÇëÊÖ¶¯Ö¸¶¨");
+                Debug.LogWarning("æœªæ‰¾åˆ°CinemachineVirtualCameraï¼Œè¯·æ‰‹åŠ¨æŒ‡å®š");
         }
 
-        // È·±£ÓĞÖ÷Ïà»úÓÃÓÚÉäÏß¼ì²â
+        // ç¡®ä¿æœ‰ä¸»ç›¸æœºç”¨äºå°„çº¿æ£€æµ‹
         if (Camera.main == null)
-            Debug.LogWarning("³¡¾°ÖĞĞèÒªÓĞÒ»¸ö±êÎªMain CameraµÄÏà»ú");
+            Debug.LogWarning("åœºæ™¯ä¸­éœ€è¦æœ‰ä¸€ä¸ªæ ‡ä¸ºMain Cameraçš„ç›¸æœº");
     }
 
     void Update()
     {
-        // 1. ´¦Àí×ó¼üÑ¡Ôñ
+        // 1. å¤„ç†å·¦é”®é€‰æ‹©
         if (Input.GetMouseButtonDown(0))
             TrySelectObject();
 
-        // 2. ´¦ÀíÓÒ¼üÍÏ×§
+        // 2. å¤„ç†å³é”®æ‹–æ‹½
         HandleDragInput();
 
-        // 3. ¸üĞÂÑ¡ÖĞÎïÌåµÄÎ»ÖÃ
+        // 3. æ›´æ–°é€‰ä¸­ç‰©ä½“çš„ä½ç½®
         if (selectedObject != null)
             UpdateSelectedObjectPosition();
     }
 
     void TrySelectObject()
     {
-        // Ê¹ÓÃÖ÷Ïà»ú½øĞĞÉäÏß¼ì²â£¨¸ü¿É¿¿£©
+        // ä½¿ç”¨ä¸»ç›¸æœºè¿›è¡Œå°„çº¿æ£€æµ‹ï¼ˆæ›´å¯é ï¼‰
         Camera mainCam = Camera.main;
         if (mainCam == null) return;
 
@@ -61,18 +61,18 @@ public class VirtualCameraObjectController : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, maxSelectionDistance, selectableLayers))
         {
-            // Ñ¡ÔñĞÂÎïÌå
+            // é€‰æ‹©æ–°ç‰©ä½“
             selectedObject = hit.collider.gameObject;
             currentYOffset = 0f;
 
-            Debug.Log($"Ñ¡ÔñÁË: {selectedObject.name}");
+            Debug.Log($"é€‰æ‹©äº†: {selectedObject.name}");
 
-            // ¿ÉÑ¡£ºÌí¼ÓÑ¡ÔñÊÓ¾õĞ§¹û
+            // å¯é€‰ï¼šæ·»åŠ é€‰æ‹©è§†è§‰æ•ˆæœ
             HighlightObject(selectedObject, true);
         }
         else
         {
-            // µã»÷¿Õ°×´¦È¡ÏûÑ¡Ôñ
+            // ç‚¹å‡»ç©ºç™½å¤„å–æ¶ˆé€‰æ‹©
             if (selectedObject != null)
             {
                 HighlightObject(selectedObject, false);
@@ -83,7 +83,7 @@ public class VirtualCameraObjectController : MonoBehaviour
 
     void HandleDragInput()
     {
-        // ÓÒ¼ü°´ÏÂ¿ªÊ¼ÍÏ×§
+        // å³é”®æŒ‰ä¸‹å¼€å§‹æ‹–æ‹½
         if (Input.GetMouseButtonDown(1) && selectedObject != null)
         {
             isDragging = true;
@@ -91,7 +91,7 @@ public class VirtualCameraObjectController : MonoBehaviour
             Cursor.visible = false;
         }
 
-        // ÓÒ¼üÊÍ·Å½áÊøÍÏ×§
+        // å³é”®é‡Šæ”¾ç»“æŸæ‹–æ‹½
         if (Input.GetMouseButtonUp(1))
         {
             isDragging = false;
@@ -99,13 +99,13 @@ public class VirtualCameraObjectController : MonoBehaviour
             Cursor.visible = true;
         }
 
-        // ÍÏ×§Ê±¸üĞÂYÆ«ÒÆ
+        // æ‹–æ‹½æ—¶æ›´æ–°Yåç§»
         if (isDragging)
         {
             float mouseY = Input.GetAxis("Mouse Y");
             currentYOffset += mouseY * ySensitivity;
 
-            // ¿ÉÑ¡£ºÏŞÖÆYÖáÒÆ¶¯·¶Î§
+            // å¯é€‰ï¼šé™åˆ¶Yè½´ç§»åŠ¨èŒƒå›´
             // currentYOffset = Mathf.Clamp(currentYOffset, -5f, 5f);
         }
     }
@@ -114,21 +114,21 @@ public class VirtualCameraObjectController : MonoBehaviour
     {
         if (virtualCamera == null) return;
 
-        // »ñÈ¡ĞéÄâÏà»úµÄtransform
+        // è·å–è™šæ‹Ÿç›¸æœºçš„transform
         Transform camTransform = virtualCamera.transform;
 
-        // ¼ÆËãÄ¿±êÎ»ÖÃ£ºÏà»úÇ°·½¹Ì¶¨¾àÀë + YÖáÆ«ÒÆ
+        // è®¡ç®—ç›®æ ‡ä½ç½®ï¼šç›¸æœºå‰æ–¹å›ºå®šè·ç¦» + Yè½´åç§»
         Vector3 basePosition = camTransform.position + camTransform.forward * followDistance;
         targetPosition = basePosition + Vector3.up * currentYOffset;
 
-        // Æ½»¬ÒÆ¶¯µ½Ä¿±êÎ»ÖÃ
+        // å¹³æ»‘ç§»åŠ¨åˆ°ç›®æ ‡ä½ç½®
         selectedObject.transform.position = Vector3.Lerp(
             selectedObject.transform.position,
             targetPosition,
             Time.deltaTime * moveSmoothness
         );
 
-        // ¿ÉÑ¡£ºÈÃÎïÌåÊ¼ÖÕÃæÏòÏà»ú
+        // å¯é€‰ï¼šè®©ç‰©ä½“å§‹ç»ˆé¢å‘ç›¸æœº
         // selectedObject.transform.LookAt(camTransform);
     }
 
@@ -138,7 +138,7 @@ public class VirtualCameraObjectController : MonoBehaviour
         mobj.HighlightObject(highlight);
     }
 
-    // ¹«¹²·½·¨¹©ÆäËû½Å±¾µ÷ÓÃ
+    // å…¬å…±æ–¹æ³•ä¾›å…¶ä»–è„šæœ¬è°ƒç”¨
     public GameObject GetSelectedObject() { return selectedObject; }
     public bool IsDragging() { return isDragging; }
     public void ForceSelect(GameObject obj)

@@ -1,41 +1,41 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class MovableObject : MonoBehaviour
 {
-    [Header("²ÄÖÊÉèÖÃ")]
-    public Material originalMaterial;  // ÎïÌåÔ­±¾µÄ²ÄÖÊ
-    public Material pickedMaterial;    // ±»Ñ¡ÖĞÊ±µÄ¸ßÁÁ²ÄÖÊ
+    [Header("æè´¨è®¾ç½®")]
+    public Material originalMaterial;  // ç‰©ä½“åŸæœ¬çš„æè´¨
+    public Material pickedMaterial;    // è¢«é€‰ä¸­æ—¶çš„é«˜äº®æè´¨
 
-    // ÄÚ²¿×´Ì¬
+    // å†…éƒ¨çŠ¶æ€
     private Renderer objectRenderer;
-    private Material[] originalMaterials;  // ±£´æËùÓĞ×Ó²ÄÖÊµÄÔ­Ê¼×´Ì¬
+    private Material[] originalMaterials;  // ä¿å­˜æ‰€æœ‰å­æè´¨çš„åŸå§‹çŠ¶æ€
     private bool isHighlighted = false;
 
     void Start()
     {
-        // »ñÈ¡äÖÈ¾Æ÷×é¼ş
+        // è·å–æ¸²æŸ“å™¨ç»„ä»¶
         objectRenderer = GetComponent<Renderer>();
 
         if (objectRenderer == null)
         {
-            Debug.LogError($"MovableObjectĞèÒªRenderer×é¼ş: {gameObject.name}");
+            Debug.LogError($"MovableObjectéœ€è¦Rendererç»„ä»¶: {gameObject.name}");
             return;
         }
 
-        // Èç¹ûÃ»ÓĞÖ¸¶¨Ô­Ê¼²ÄÖÊ£¬Ê¹ÓÃµ±Ç°µÄµÚÒ»¸ö²ÄÖÊ
+        // å¦‚æœæ²¡æœ‰æŒ‡å®šåŸå§‹æè´¨ï¼Œä½¿ç”¨å½“å‰çš„ç¬¬ä¸€ä¸ªæè´¨
         if (originalMaterial == null && objectRenderer.materials.Length > 0)
         {
             originalMaterial = objectRenderer.materials[0];
         }
 
-        // ±£´æËùÓĞ×Ó²ÄÖÊµÄÔ­Ê¼×´Ì¬£¨Ö§³Ö¶à²ÄÖÊÎïÌå£©
+        // ä¿å­˜æ‰€æœ‰å­æè´¨çš„åŸå§‹çŠ¶æ€ï¼ˆæ”¯æŒå¤šæè´¨ç‰©ä½“ï¼‰
         SaveOriginalMaterials();
 
-        // È·±£ÓĞÅö×²Ìå£¨ÓÃÓÚÉäÏß¼ì²â£©
+        // ç¡®ä¿æœ‰ç¢°æ’ä½“ï¼ˆç”¨äºå°„çº¿æ£€æµ‹ï¼‰
         if (GetComponent<Collider>() == null)
         {
             gameObject.AddComponent<BoxCollider>();
-            Debug.LogWarning($"Îª {gameObject.name} Ìí¼ÓÁËBoxColliderÒÔ±ãÑ¡Ôñ");
+            Debug.LogWarning($"ä¸º {gameObject.name} æ·»åŠ äº†BoxColliderä»¥ä¾¿é€‰æ‹©");
         }
     }
 
@@ -47,7 +47,7 @@ public class MovableObject : MonoBehaviour
         }
     }
 
-    // Ñ¡ÖĞÎïÌåÊ±µ÷ÓÃ
+    // é€‰ä¸­ç‰©ä½“æ—¶è°ƒç”¨
     public void HighlightObject(bool highlight)
     {
         if (objectRenderer == null || pickedMaterial == null) return;
@@ -56,7 +56,7 @@ public class MovableObject : MonoBehaviour
 
         if (highlight)
         {
-            // Ó¦ÓÃ¸ßÁÁ²ÄÖÊ£¨ËùÓĞ×Ó²ÄÖÊ¶¼Ìæ»»£©
+            // åº”ç”¨é«˜äº®æè´¨ï¼ˆæ‰€æœ‰å­æè´¨éƒ½æ›¿æ¢ï¼‰
             Material[] highlightedMaterials = new Material[objectRenderer.materials.Length];
             for (int i = 0; i < highlightedMaterials.Length; i++)
             {
@@ -66,25 +66,25 @@ public class MovableObject : MonoBehaviour
         }
         else
         {
-            // »Ö¸´Ô­Ê¼²ÄÖÊ
+            // æ¢å¤åŸå§‹æè´¨
             objectRenderer.materials = originalMaterials;
         }
     }
 
-    // ¼ì²éÊÇ·ñÕıÔÚ¸ßÁÁÏÔÊ¾
+    // æ£€æŸ¥æ˜¯å¦æ­£åœ¨é«˜äº®æ˜¾ç¤º
     public bool IsHighlighted()
     {
         return isHighlighted;
     }
 
-    // »ñÈ¡µ±Ç°YÖáÏŞÖÆ·¶Î§
+    // è·å–å½“å‰Yè½´é™åˆ¶èŒƒå›´
     public Vector2 GetYLimits()
     {
         //return new Vector2(minYOffset, maxYOffset);
         return Vector2.zero;
     }
 
-    // ÎªÁË·½±ãµ÷ÊÔ£¬ÔÚSceneÊÓÍ¼ÖĞÏÔÊ¾·¶Î§
+    // ä¸ºäº†æ–¹ä¾¿è°ƒè¯•ï¼Œåœ¨Sceneè§†å›¾ä¸­æ˜¾ç¤ºèŒƒå›´
     void OnDrawGizmosSelected()
     {
         //if (!isHighlighted) return;
@@ -93,7 +93,7 @@ public class MovableObject : MonoBehaviour
         //Vector3 center = transform.position;
         //Vector3 size = GetComponent<Collider>()?.bounds.size ?? Vector3.one;
 
-        //// »æÖÆYÖáÒÆ¶¯·¶Î§
+        //// ç»˜åˆ¶Yè½´ç§»åŠ¨èŒƒå›´
         //Vector3 minPos = center + Vector3.up * minYOffset;
         //Vector3 maxPos = center + Vector3.up * maxYOffset;
 
